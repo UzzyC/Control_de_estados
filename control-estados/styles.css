@@ -1,0 +1,188 @@
+/* =========================================================
+   Control de Estados — estilos (look AdminLTE skin-blue)
+   ========================================================= */
+
+body {
+  background: #ecf0f5;
+  font-family: 'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  margin: 0;
+}
+
+/* ---------- HEADER ---------- */
+.main-header {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 50px;
+  background: #3c8dbc;
+  z-index: 1000;
+  display: flex;
+  align-items: stretch;
+}
+.main-header .logo {
+  width: 50px;
+  background: #367fa9;
+  color: #fff;
+  font-size: 20px;
+  text-align: center;
+  line-height: 50px;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+.navbar-top {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  padding: 0 10px;
+  gap: 12px;
+}
+.sidebar-toggle { color: #fff; padding: 0 8px; }
+.sidebar-toggle:hover { color: #f6f6f6; }
+.btn-ticketera {
+  background: #0d6efd;
+  color: #fff !important;
+  font-weight: 700;
+  font-size: 12px;
+  padding: 6px 14px;
+  border-radius: 4px;
+  text-decoration: none !important;
+}
+.top-badges, .top-right {
+  list-style: none;
+  margin: 0; padding: 0;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.top-badges { flex: 1; justify-content: center; }
+.top-badges li {
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.badge-dark {
+  background: #001f3f;
+  color: #fff;
+  border-radius: 3px;
+  padding: 2px 6px;
+  font-size: 10px;
+}
+.top-right li a { color: #fff; font-size: 12px; text-decoration: none; white-space: nowrap; }
+.top-right li a i { margin-right: 3px; }
+
+/* ---------- SIDEBAR ---------- */
+.main-sidebar {
+  position: fixed;
+  top: 50px; left: 0; bottom: 0;
+  width: 50px;
+  background: #fff;
+  border-right: 1px solid #d2d6de;
+  overflow-y: auto;
+  z-index: 900;
+}
+.sidebar-icons { list-style: none; margin: 0; padding: 0; }
+.sidebar-icons li { text-align: center; }
+.sidebar-icons li a {
+  display: block;
+  padding: 10px 0;
+  color: #0073b7;
+  font-size: 15px;
+}
+.sidebar-icons li a:hover { background: #f4f4f4; }
+
+/* ---------- CONTENIDO ---------- */
+.content-wrapper {
+  margin-left: 50px;
+  margin-top: 50px;
+  padding: 15px;
+  min-height: calc(100vh - 50px);
+}
+.content-header h1 {
+  font-size: 24px;
+  margin: 0 0 15px 0;
+  color: #333;
+}
+
+/* ---------- BOXES (AdminLTE) ---------- */
+.box {
+  background: #fff;
+  border-radius: 3px;
+  border-top: 3px solid #d2d6de;
+  box-shadow: 0 1px 1px rgba(0,0,0,.1);
+  margin-bottom: 20px;
+}
+.box-info    { border-top-color: #00c0ef; }
+.box-success { border-top-color: #00a65a; }
+.box-danger  { border-top-color: #dd4b39; }
+.box-header {
+  padding: 10px;
+  border-bottom: 1px solid #f4f4f4;
+}
+.box-title { font-size: 18px; margin: 0; display: inline-block; }
+.box-body { padding: 10px 15px 20px; }
+.box-danger .box-header .box-title,
+.box-success .box-header .box-title { display: block; text-align: center; }
+
+label { font-weight: 700; }
+
+/* ---------- BANNERS DE ESCANEO ---------- */
+.banner {
+  display: inline-block;
+  min-width: 60%;
+  padding: 8px 20px;
+  color: #fff;
+  font-weight: 700;
+  font-size: 15px;
+  border-radius: 3px;
+}
+.banner-aqua  { background: #00c0ef; }
+.banner-green { background: #00a65a; }
+.banner-yellow { background: #f39c12; }
+
+/* ---------- RESULTADO ---------- */
+.panel-resultado {
+  border-radius: 6px;
+  text-align: center;
+  padding: 20px;
+}
+.alert-success.panel-resultado,
+#cuadros_exito .alert-success {
+  background: #d4edda;
+  color: #1e7e34;
+  border: 1px solid #b7dfc3;
+  border-radius: 6px;
+  text-align: center;
+  padding: 10px 5px 15px;
+  margin-bottom: 15px;
+}
+#cuadros_exito h2 { font-size: 22px; margin: 10px 0 5px; }
+#cuadros_exito h3 { font-size: 19px; margin: 5px 0 10px; }
+.alert-danger.panel-resultado {
+  background: #f8d7da;
+  color: #a52834;
+  border: 1px solid #f1b8bd;
+}
+.alert-danger h2 { color: #c9302c; }
+
+.circle-error {
+  display: inline-block;
+  width: 90px; height: 90px;
+  border-radius: 50%;
+  background: #dd4b39;
+  color: #fff;
+  font-size: 46px;
+  line-height: 90px;
+  text-align: center;
+  margin-top: 15px;
+}
+
+/* input de escaneo con foco */
+.input-scan:focus {
+  border-color: #3c8dbc;
+  box-shadow: 0 0 4px rgba(60,141,188,.5);
+}
+
+@media (max-width: 991px) {
+  .top-badges { display: none; }
+}

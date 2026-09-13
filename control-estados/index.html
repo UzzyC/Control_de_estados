@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Planificación - Control de Estados</title>
+  <!-- Stack original: Bootstrap 3 + Font Awesome (AdminLTE) + jQuery -->
+  <link rel="stylesheet" href="vendor/css/bootstrap.min.css">
+  <link rel="stylesheet" href="vendor/css/font-awesome.min.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+  <!-- ====== HEADER ====== -->
+  <header class="main-header">
+    <a href="#" class="logo"><b>e</b>P</a>
+    <nav class="navbar-top">
+      <a href="#" class="sidebar-toggle"><i class="fa fa-bars"></i></a>
+      <a href="#" class="btn-ticketera"><i class="fa fa-ticket"></i> TICKETERA</a>
+      <ul class="top-badges">
+        <li>ALERTAS: <span class="badge-dark">0</span></li>
+        <li>RECLAMOS: <span class="badge-dark">0</span></li>
+        <li>REPORTES APIS: <span class="badge-dark">0</span></li>
+        <li>EVENTOS DEL DIA: <span class="badge-dark">0</span></li>
+        <li>RECORDATORIOS: <span class="badge-dark">0</span></li>
+        <li>MENSAJES: <span class="badge-dark">0</span></li>
+      </ul>
+      <ul class="top-right">
+        <li><a href="#"><i class="fa fa-download"></i></a></li>
+        <li><a href="#"><i class="fa fa-bell"></i><i class="fa fa-wrench"></i></a></li>
+        <li><a href="#"><i class="fa fa-user"></i> Test IT <i class="fa fa-caret-down"></i></a></li>
+        <li><a href="#"><i class="fa fa-power-off"></i> Cerrar Sesión</a></li>
+        <li><a href="#" onclick="$('#historialModal').show();" title="Historial"><i class="fa fa-history"></i></a></li>
+        <li><a href="#" data-toggle="modal" data-target="#configModal" title="Configuración"><i
+              class="fa fa-cogs"></i></a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- ====== SIDEBAR ====== -->
+  <aside class="main-sidebar">
+    <ul class="sidebar-icons">
+      <li><a href="#"><i class="fa fa-search"></i></a></li>
+      <li><a href="#"><i class="fa fa-file-text-o"></i></a></li>
+      <li><a href="#"><i class="fa fa-file-image-o"></i></a></li>
+      <li><a href="#"><i class="fa fa-refresh"></i></a></li>
+      <li><a href="#"><i class="fa fa-file-o"></i></a></li>
+      <li><a href="#"><i class="fa fa-file-text"></i></a></li>
+      <li><a href="#"><i class="fa fa-google"></i></a></li>
+      <li><a href="#"><i class="fa fa-file"></i></a></li>
+      <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+      <li><a href="#"><i class="fa fa-money"></i></a></li>
+      <li><a href="#"><i class="fa fa-clone"></i></a></li>
+      <li><a href="#"><i class="fa fa-external-link"></i></a></li>
+      <li><a href="#"><i class="fa fa-copy"></i></a></li>
+      <li><a href="#"><i class="fa fa-briefcase"></i></a></li>
+      <li><a href="#"><i class="fa fa-user-o"></i></a></li>
+      <li><a href="#"><i class="fa fa-dollar"></i></a></li>
+      <li><a href="#"><i class="fa fa-database"></i></a></li>
+      <li><a href="#"><i class="fa fa-cloud-upload"></i></a></li>
+      <li><a href="#"><i class="fa fa-exclamation-triangle"></i></a></li>
+    </ul>
+  </aside>
+
+  <!-- ====== CONTENIDO ====== -->
+  <div class="content-wrapper">
+    <section class="content-header">
+      <h1>Planificación / Control de Estados</h1>
+    </section>
+
+    <section class="content">
+      <audio id="audio_ok" src=""></audio>
+      <audio id="audio_error" src=""></audio>
+
+      <!-- FILTROS -->
+      <div class="box box-info">
+        <div class="box-header with-border">
+          <h3 class="box-title">Filtros De Busqueda</h3>
+        </div>
+        <div class="box-body">
+          <div class="row">
+            <div class="col-lg-3">
+              <label>Estado: <span class="text-danger">(Cambiar a buscador)</span></label>
+              <div class="input-group">
+                <select class="form-control" id="estado_id">
+                  <option value="">Seleccionar estado</option>
+                  <option value="EPR" selected>EPR - Esperando Programación</option>
+                  <option value="ENT">ENT - Entregada</option>
+                  <option value="REC">1ER - Envio recolectado</option>
+                </select>
+                <span class="input-group-addon"><input type="checkbox" id="chk_estado"></span>
+              </div>
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col-lg-3">
+              <label>Guía a encontrar:</label>
+              <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                <input type="text" class="form-control" id="guia_buscar" placeholder="N° de guía a buscar">
+              </div>
+            </div>
+            <div class="col-lg-3">
+              <label>Guia <span class="text-danger">(Mantener cursor)</span>:</label>
+              <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-barcode"></i></span>
+                <input type="text" class="form-control input-scan" id="guia_scan" autocomplete="off">
+                <span class="input-group-addon"><input type="checkbox" id="chk_guia"></span>
+              </div>
+            </div>
+            <div class="col-lg-3">
+              <label>Remito <span class="text-danger">(Mantener cursor)</span>:</label>
+              <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-barcode"></i></span>
+                <input type="text" class="form-control input-scan" id="remito_scan" autocomplete="off">
+                <span class="input-group-addon"><input type="checkbox" id="chk_remito"></span>
+              </div>
+            </div>
+            <div class="col-lg-3">
+              <label>Guia agente <span class="text-danger">(Mantener cursor)</span>:</label>
+              <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-barcode"></i></span>
+                <input type="text" class="form-control input-scan" id="agente_scan" autocomplete="off">
+                <span class="input-group-addon"><input type="checkbox" id="chk_agente"></span>
+              </div>
+            </div>
+          </div>
+          <br>
+          <div class="row text-center">
+            <div class="col-lg-4">
+              <div class="banner banner-aqua">ULTIMA GUIA ESCANEADA: <span id="ultima_guia"></span></div>
+            </div>
+            <div class="col-lg-4">
+              <div class="banner banner-green">GUIAS ESCANEADAS CON EXITO: <span id="contador_exito">0</span></div>
+            </div>
+            <div class="col-lg-4">
+              <div class="banner banner-yellow">TOTAL DE GUIAS ESCANEADAS: <span id="contador_total">0</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RESULTADO: EXITOSO -->
+      <div class="box box-success" id="box_exitoso" style="display:none;">
+        <div class="box-header with-border">
+          <h3 class="box-title text-success" style="text-transform: uppercase;"><b>Control de Estado Exitoso</b></h3>
+        </div>
+        <div class="box-body">
+          <!-- Los recuadros verdes se generan desde CUADROS_EXITO en script.js -->
+          <div id="cuadros_exito"></div>
+        </div>
+      </div>
+
+      <!-- RESULTADO: FALLIDO -->
+      <div class="box box-danger" id="box_fallido" style="display:none;">
+        <div class="box-header with-border">
+          <h3 class="box-title text-danger text-center-block" style="text-transform: uppercase;"><b>Control de Estado
+              Fallido</b></h3>
+        </div>
+        <div class="box-body">
+          <div class="row">
+            <div class="col-lg-3 text-center">
+              <span class="circle-error"><i class="fa fa-times"></i></span>
+            </div>
+            <div class="col-lg-9">
+              <div class="alert-danger panel-resultado">
+                <h2><b>ERROR</b></h2>
+                <h3><b id="mensaje_error">El estado actual es: —</b></h3>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+  </div>
+
+  <!-- MODAL DE HISTORIAL -->
+  <div class="modal" id="historialModal" tabindex="-1" role="dialog"
+    style="background: rgba(0,0,0,0.5); overflow-y: auto;">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header" style="background:#f39c12; color:white;">
+          <button type="button" class="close" onclick="$('#historialModal').hide();"
+            style="color:white; opacity:0.8;"><span>&times;</span></button>
+          <h4 class="modal-title">Historial de Escaneos de la Jornada</h4>
+        </div>
+        <div class="modal-body">
+          <div style="margin-bottom: 15px; font-size: 16px;">
+            <strong>Tiempo promedio por escaneo:</strong> <span id="promedio_tiempo" class="text-primary">-</span><br>
+            <strong>Total de guías escaneadas:</strong> <span id="historial_cantidad_guias"
+              class="text-primary">0</span><br>
+            <strong>Tiempo de trabajo continuo estimado:</strong> <span id="historial_tiempo_total"
+              class="text-primary">-</span>
+          </div>
+          <table class="table table-bordered table-striped" id="tablaHistorial">
+            <thead>
+              <tr>
+                <th>Hora</th>
+                <th>Guía</th>
+                <th>Estado Control</th>
+                <th>Resultado</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL DE CONFIGURACIÓN -->
+  <div class="modal" id="configModal" tabindex="-1" role="dialog"
+    style="background: rgba(0,0,0,0.5); overflow-y: auto;">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header" style="background:#3c8dbc; color:white;">
+          <button type="button" class="close" onclick="$('#configModal').hide();"
+            style="color:white; opacity:0.8;"><span>&times;</span></button>
+          <h4 class="modal-title">Configuración del Sistema</h4>
+        </div>
+        <div class="modal-body">
+          <ul class="nav nav-tabs" id="configTabs">
+            <li class="active"><a href="#" data-target="#tabCuadros">Cuadros Visuales</a></li>
+            <li><a href="#" data-target="#tabGuias">Base de Guías</a></li>
+            <li><a href="#" data-target="#tabPreferencias">Preferencias</a></li>
+          </ul>
+
+          <div class="tab-content" style="padding-top: 15px;">
+            <!-- Pestaña Cuadros -->
+            <div class="tab-pane active" id="tabCuadros">
+              <div id="formCuadro"
+                style="display:none; background:#f9f9f9; padding:15px; border:1px solid #ddd; margin-bottom:15px;">
+                <h4>Formulario de Cuadro</h4>
+                <input type="hidden" id="cuadroIndex">
+                <div class="row">
+                  <div class="col-md-3">
+                    <label>Título del Cuadro</label>
+                    <input type="text" id="cuadroTitulo" class="form-control">
+                  </div>
+                  <div class="col-md-3">
+                    <label>Campo Asociado</label>
+                    <input type="text" id="cuadroCampo" class="form-control" placeholder="ej. zonaDestino">
+                  </div>
+                  <div class="col-md-3">
+                    <label>Tipo de Campo</label>
+                    <select id="cuadroTipo" class="form-control"
+                      onchange="$('#divCuadroOpciones').toggle($(this).val() === 'lista')">
+                      <option value="texto">Texto Libre</option>
+                      <option value="fecha">Fecha (Calendario)</option>
+                      <option value="lista">Seleccionable (Lista)</option>
+                    </select>
+                  </div>
+                  <div class="col-md-3">
+                    <label>¿Ocupa toda la fila?</label>
+                    <div class="checkbox"><label><input type="checkbox" id="cuadroDestacado"> Sí, destacado</label>
+                    </div>
+                  </div>
+                </div>
+                <div class="row" id="divCuadroOpciones" style="display:none; margin-top:10px;">
+                  <div class="col-md-12">
+                    <label>Opciones de Lista (separadas por coma)</label>
+                    <input type="text" id="cuadroOpciones" class="form-control"
+                      placeholder="Ej: GBA NORTE, GBA SUR, CABA, INTERIOR">
+                  </div>
+                </div>
+                <div style="margin-top:10px;">
+                  <button class="btn btn-primary" onclick="guardarCuadro()">Guardar</button>
+                  <button class="btn btn-default" onclick="$('#formCuadro').hide()">Cancelar</button>
+                </div>
+              </div>
+
+              <button class="btn btn-success btn-sm" style="margin-bottom: 10px;" onclick="nuevoCuadro()">+ Nuevo
+                Cuadro</button>
+              <table class="table table-bordered table-striped" id="tablaCuadros">
+                <thead>
+                  <tr>
+                    <th>Título</th>
+                    <th>Campo</th>
+                    <th>Destacado</th>
+                    <th>Acciones</th>
+                  </tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+            </div>
+
+            <!-- Pestaña Guías -->
+            <div class="tab-pane" id="tabGuias" style="display:none;">
+              <div id="formGuia"
+                style="display:none; background:#f9f9f9; padding:15px; border:1px solid #ddd; margin-bottom:15px;">
+                <h4>Formulario de Guía</h4>
+                <div class="row">
+                  <div class="col-md-3">
+                    <label>Nro Guía</label>
+                    <input type="text" id="guiaNro" class="form-control">
+                  </div>
+                  <div class="col-md-3">
+                    <label>Estado Corto (ej. EPR)</label>
+                    <input type="text" id="guiaEstado" class="form-control">
+                  </div>
+                  <div class="col-md-3">
+                    <label>Estado Nombre (Largo)</label>
+                    <input type="text" id="guiaEstadoNombre" class="form-control">
+                  </div>
+                  <div class="col-md-3">
+                    <label>Clasificación</label>
+                    <select id="guiaClasificacion" class="form-control">
+                      <option value="ACEPTADA">Aceptada (Verde)</option>
+                      <option value="RECHAZADA">Rechazada (Roja)</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="row" style="margin-top:10px;" id="contenedorCamposDinamicos">
+                  <div class="col-md-12">
+                    <label>Datos Adicionales (Requeridos para los Cuadros Visuales)</label>
+                    <div id="camposDinamicosRow" class="row"></div>
+                  </div>
+                </div>
+                <div style="margin-top:10px;">
+                  <button class="btn btn-primary" onclick="guardarGuia()">Guardar</button>
+                  <button class="btn btn-default" onclick="$('#formGuia').hide()">Cancelar</button>
+                </div>
+              </div>
+
+              <button class="btn btn-success btn-sm" style="margin-bottom: 10px;" onclick="nuevaGuia()">+ Nueva
+                Guía</button>
+              <table class="table table-bordered table-striped" id="tablaGuias">
+                <thead>
+                  <tr>
+                    <th>Nro Guía</th>
+                    <th>Estado</th>
+                    <th>Nombre</th>
+                    <th>Clasificación</th>
+                    <th>Acciones</th>
+                  </tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+            </div>
+
+            <!-- Pestaña Preferencias -->
+            <div class="tab-pane" id="tabPreferencias" style="display:none;">
+              <div class="form-group">
+                <label>Sonidos de Alerta:</label><br>
+                <button id="btnToggleSound" class="btn btn-info" onclick="toggleSonido()">Sonido Activado 🔊</button>
+              </div>
+              <div class="form-group" style="margin-top:20px; border-top:1px solid #ccc; padding-top:10px;">
+                <label class="text-danger">Zona de Peligro</label><br>
+                <button class="btn btn-danger" onclick="reiniciarContadores()">Reiniciar Contadores (Vuelven a
+                  0)</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="vendor/js/jquery.min.js"></script>
+  <script src="script.js"></script>
+</body>
+
+</html>
